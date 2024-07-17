@@ -1,0 +1,49 @@
+# Criando SCHEMA para o graphQL
+type Category {
+  # O ! significa que esse campo é obrigatório
+  id: ID!
+  name: String!
+  # QUando não informamos o ! significa que o campo é opcional
+  description: String
+  # Aqui seria o retorno do nosso relacionamento, ou seja, retornar os cursos de uma categoria
+  # Uma categoria pode ter vários cursos, por isso o [], slice de cursos
+  courses: [Course!]! 
+}
+
+type Course {
+  id: ID!
+  name: String!
+  description: String
+  # Nesse caso um curso tem apenas 1 categoria
+  categories: Category!
+}
+# Aqui estamos indicando os campos para criar uma nova categoria
+input NewCategory {
+  name: String
+  description: String
+}
+# Aqui estamos indicando os campos para criar um novo curso
+input NewCourse {
+  name: String!
+  description: String
+  categoryId: ID!
+}
+
+# Indicando consultas, seria a query de busca
+type Query {
+  categories: [Category!]!
+  courses: [Course!]!
+}
+
+# Mutation, o mutation é a indicação que o registro vai sofrer alguma alteração, diferente do query que é apenas busca aqui alteramos os dados
+type Mutation {
+  # createCategory - indicamos o nome do "método" que será chamado
+  # input - é a nossa struct de input que indicamos acima NewCategory, que é do tipo input
+  # Category! - é o nosso tipo de retorno
+  createCategory(input: NewCategory): Category!
+  createCourse(input: NewCourse): Course!
+}
+
+# Depois de criar o nosso schema executa o comando go run github.com/99designs/gqlgen generate assim ele vai criar todo o formato para trabalhar com esse schema
+# Depois de criado vai criar os resolvers, que seriam os métodos de entrar e saída, seria basicamente nosso controller se a entrada for via API
+# obs: vai dar um erro reclamando que não tem amis o todo, é normal, pois não temos mais esse arquivo
