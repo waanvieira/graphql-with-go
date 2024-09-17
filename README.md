@@ -43,4 +43,8 @@ Os schemas serão os nossos "controllers" nossas informações dos inputs do Gra
 Para criarmos nossos métodos e injetar nossas ações alteramos o arquivo graph/schema.resolvers.go nesse arquivo vamos indicar nossos métodos quando alguma ação é executada
 quando for para fazer uma consulta, criar, alterar e deletar algo
 
+Gerar nossos metodos e models automaticamente
+
+go run github.com/99designs/gqlgen generate
+
 
